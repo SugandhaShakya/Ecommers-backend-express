@@ -1,5 +1,3 @@
-const asyncHandler = require("express-async-handler");
-
 const { Product } = require("../models/productModel");
 const { Category } = require("../models/categoryModel");
 const mongoose = require("mongoose");
@@ -9,7 +7,7 @@ const mongoose = require("mongoose");
 // @access  public
 const getProducts = async (req, res) => {
   let filter = {};
-  if (req.query.categories) {
+  if(req.query.categories) {
     filter = { category: req.query.categories.split(",") };
   }
 
