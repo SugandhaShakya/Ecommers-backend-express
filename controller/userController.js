@@ -64,6 +64,42 @@ const loginUser = async (req, res)=>{
     res.status(400).send('password is wrong');
   }
 }
+const updateUser = async (req, res) => {
+  try {
+    const userExist = await User.findById(req.params.id);
+    let newPassword = userExist.passwordHash;
+
+    const updates = {};
+    if (req.body.name) updates.name = req.body.name;
+    if (req.body.email) updates.email = req.body.email;
+    if (req.body.password) {
+      newPassword = bcrypt.hashSync(req.body.password, 10);
+      updates.passwordHash = newPassword;
+    }
+    if (req.body.phone) updates.phone = req.body.phone;
+    if (req.body.isAdmin) updates.isAdmin = req.body.isAdmin;
+    if (req.body.apartment) updates.apartment = req.body.apartment;
+    if (req.body.zip) updates.zip = req.body.zip;
+    if (req.body.city) updates.city = req.body.city;
+    if (req.body.country) updates.country = req.body.country;
+
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      updates,
+      { new: true }
+    );
+
+    if (!user)
+      return res.status(400).send("the user cannot be created");
+
+    res.send(user);
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ success: false, message: "internal server error" });
+  }
+};
 
 
 module.exports = {
@@ -71,4 +107,5 @@ module.exports = {
   registerUser,
   getUserById,
   loginUser,
+  updateUser,
 };
