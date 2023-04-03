@@ -1,70 +1,71 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const productSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    richDescription: {
+        type: String,
+        default: "",
+    },
 
-    },
-    description:{
+    image: {
         type: String,
-        required: true
+        default: "",
     },
-    richDescription:{
+    images: [
+        {
+            type: String,
+        },
+    ],
+    brand: {
         type: String,
-        default:''
+        default: "",
     },
-
-    image:{
-        type: String,
-        default:''
-    },
-    images:[{
-        type: String
-    }],
-    brand:{
-        type: String,
-        default:''
-    },
-    price:{
+    price: {
         type: Number,
-        default: 0
+        default: 0,
     },
-    category:{
+    category: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
-        required: true
+        ref: "Category",
+        required: true,
     },
     countInStock: {
         type: Number,
         required: true,
-        min:0,
-        max: 255
+        min: 0,
+        max: 255,
     },
     rating: {
         type: Number,
-        default:0,
+        default: 0,
     },
-    numReviews:{
+    numReviews: {
         type: Number,
         default: 0,
     },
-    isFeatured:{
+    isFeatured: {
         type: Boolean,
-        default: false
+        default: false,
     },
-    dateCreated:{
+    dateCreated: {
         type: Date,
-        default: Date.now
-    }
-})
+        default: Date.now,
+    },
+});
 
-productSchema.virtual('id').get(function(){
+productSchema.virtual("id").get(function () {
     return this._id.toHexString();
-})
+});
 
-productSchema.set('toJSON',{
-    virtuals:true,
-})
+productSchema.set("toJSON", {
+    virtuals: true,
+});
 
-exports.Product = mongoose.model('Product', productSchema)
+exports.Product = mongoose.model("Product", productSchema);

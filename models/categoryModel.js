@@ -1,25 +1,27 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const categorySchema = mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
+const categorySchema = mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: true,
+        },
+        icon: {
+            type: String,
+        },
+        color: {
+            type: String,
+        },
     },
-    icon: {
-        type: String,
-    },
-    color: { 
-        type: String,
-    }
-},{ collection: 'categories' })
+    { collection: "categories" }
+);
 
-
-categorySchema.virtual('id').get(function () {
+categorySchema.virtual("id").get(function () {
     return this._id.toHexString();
 });
 
-categorySchema.set('toJSON', {
+categorySchema.set("toJSON", {
     virtuals: true,
 });
 
-exports.Category = mongoose.model('Category', categorySchema);
+exports.Category = mongoose.model("Category", categorySchema);

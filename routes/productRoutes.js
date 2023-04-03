@@ -4,8 +4,6 @@ const router = express.Router();
 const {protect} = require('../middleware/authMiddleware');
 const isAdmin = require("../middleware/isAdmin");
 
-
-
 router.get("/",protect, getProducts);
 router.post("/", protect, isAdmin, setProducts);
 router.put("/:id", protect, isAdmin, updateProduct)
